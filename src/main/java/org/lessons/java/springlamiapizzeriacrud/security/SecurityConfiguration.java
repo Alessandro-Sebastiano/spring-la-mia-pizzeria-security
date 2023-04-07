@@ -26,13 +26,19 @@ public class SecurityConfiguration {
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.authorizeHttpRequests().requestMatchers("/**").fullyAuthenticated().and().formLogin().and().logout().and().exceptionHandling();
+        httpSecurity.authorizeHttpRequests()
+                .requestMatchers("/**")
+                .fullyAuthenticated()
+                .and().formLogin()
+                .and().logout()
+                .and().exceptionHandling();
         return httpSecurity.build();
 
     }
